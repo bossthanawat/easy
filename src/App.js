@@ -7,6 +7,8 @@ import './App.css';
  * - currentprice : /api/currentprice
  * - currentprice By code : /api/currentprice/:id
  * - supported-currencies" : /api/supported-currencies"
+ * 
+ * ถ้า npm i ไม่ได้ให้ลบ package-lock ออกแล้ว npm i ไหม่
  */
 
 function App() {
