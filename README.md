@@ -1,7 +1,10 @@
 # Getting Started with Create React App
 api 
+
 currentprice : /api/currentprice
+
 currentprice By code : /api/currentprice/:id
+
 supported-currencies" : /api/supported-currencies
 
 ถ้า npm install ไม่ได้ให้ลบ package-lock ออกแล้ว npm i ใหม่
