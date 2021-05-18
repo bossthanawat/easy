@@ -1,6 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 
+/**
+ * 
+ * api 
+ * - currentprice : /api/currentprice
+ * - currentprice By code : /api/currentprice/:id
+ * - supported-currencies" : /api/supported-currencies"
+ */
+
 function App() {
   return (
     <div className="App">
