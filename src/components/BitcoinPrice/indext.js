@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../../App.css';
-import { Menu, Card, Dropdown, Button, message, Row } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons'
+import { Card, Button, Select, Row } from 'antd';
+
+
 const style = {
     textdeail: {
         marginTop: -19,
@@ -12,7 +13,8 @@ const style = {
         borderColor: '#FFC674',
         borderRadius: 20,
         width: 600,
-        marginTop: 10
+        marginTop: 10,
+        bottom:10
     },
     txtTiltle: {
         left: 5.91,
@@ -56,29 +58,28 @@ const style = {
     }
 }
 
-function handleMenuClick(e) {
-    message.info('Click on menu item.');
-    console.log('click', e);
+const handleChange = (value) => {
+    console.log(`selected ${value}`);
 }
 
-const menu = (
-    <Menu onClick={handleMenuClick}>
-        <Menu.Item key="1">
-            1st menu item
-        </Menu.Item>
-    </Menu>
-);
+// const fetchDate = () => {
+//     return axios.get("/api/currenprice")
+//           .then((response) => console.log(response.data));}
 
 
 function BitcoinPrice() {
 
     const [hasError, setError] = useState(false)
     const [data, setData] = useState([])
-    const [datetime, setTime] = useState({})
+    const [datetime, setTime] = useState([])
+    const { Option } = Select;
+
+
 
     useEffect(() => {
         async function fetchData() {
             const res = await fetch('/api/supported-currencies');
+            // const res = await fetch('/api/currentprice');
             res
                 .json()
                 .then(res => setData(res))
@@ -86,8 +87,19 @@ function BitcoinPrice() {
         }
         fetchData()
         console.log('data', data);
-        console.log('time', datetime);
+        async function fetchDate() {
+            // const res = await fetch('/api/supported-currencies');
+            const res = await fetch('/api/currentprice');
+            res
+                .json()
+                .then(res => setTime(res))
+                .catch(err => setError(err))
+        }
+        fetchDate();
+
+
     }, [])
+
 
     const mapdata = () => {
         return data && data.map(
@@ -105,16 +117,12 @@ function BitcoinPrice() {
         )
     }
 
-    const mapSelect = () => {
+    const mapselect = () => {
         return data && data.map(
             function (data, index) {
                 return (
                     <>
-                        <Menu onClick={handleMenuClick}>
-                            <Menu.Item key={index}>
-                                {data.currency}
-                            </Menu.Item>
-                        </Menu>
+                        <Option value={index}>{data.currency}</Option>
                     </>
                 )
             }
@@ -124,14 +132,16 @@ function BitcoinPrice() {
     return (
         <div style={{ margin: 160, marginLeft: 100 }}>
             <h1>BitcoinPrice</h1>
+            <h3 style={style.txtDescription}>update : {datetime.time && datetime.time.updated}</h3>
+
 
             <Row>
+
                 <h2> add curencies : </h2> &nbsp; &nbsp;
-                <Dropdown overlay={menu} style={style.Ddl} >
-                    <Button style={style.Ddl}>
-                        select <DownOutlined />
-                    </Button>
-                </Dropdown>
+
+                <Select placeholder="select" style={{ width: 120 }} onChange={handleChange}>
+                    {mapselect()}
+                </Select>
                 <Button style={style.btn}>
                     ADD
                 </Button>
@@ -141,7 +151,25 @@ function BitcoinPrice() {
             </Row>
 
             <p>count : {data.length}</p>
-            {mapdata()}
+            {/* {mapdata()} */}
+
+            <Card style={style.CardStyle}>
+                <h1 style={style.txtTiltle}>{datetime.bpi && datetime.bpi.USD.code}</h1>
+                <h2 style={style.txtDescription}>{datetime.bpi &&  datetime.bpi.USD.description}</h2>
+                <h2 style={{ textAlign: 'right' }}>{datetime.bpi &&  datetime.bpi.USD.rate}</h2>
+            </Card>
+            <Card style={style.CardStyle}>
+                <h1 style={style.txtTiltle}>{datetime.bpi && datetime.bpi.GBP.code}</h1>
+                <h2 style={style.txtDescription}>{datetime.bpi && datetime.bpi.GBP.description}</h2>
+                <h2 style={{ textAlign: 'right' }}>{datetime.bpi &&  datetime.bpi.GBP.rate}</h2>
+            </Card>
+            <Card style={style.CardStyle}>
+                <h1 style={style.txtTiltle}>{datetime.bpi  && datetime.bpi.EUR.code}</h1>
+                <h2 style={style.txtDescription}>{datetime.bpi  && datetime.bpi.EUR.description}</h2>
+                <h2 style={{ textAlign: 'right' }}>{datetime.bpi  && datetime.bpi.EUR.rate}</h2>
+            </Card>
+
+
         </div>
     );
 }

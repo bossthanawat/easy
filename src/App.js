@@ -37,17 +37,7 @@ const router = (page) => {
 
 function App() {
 
-
-  
-
   const [page, setPage] = useState("Bitcoin-price")
-
-  const [state, setState] = useState([])
-  useEffect(() => {
-    fetch("https://api.coindesk.com/v1/bpi/supported-currencies.json").then(
-      res => setState(res.data)
-    )
-  })
 
   return (
     <div className="App">
@@ -56,7 +46,6 @@ function App() {
           EASY REACT
           <a className="Bitcoin-link" onClick={() => { setPage("Bitcoin-price"); router(page) }}>Bitcoin price </a>
           <a className="Bitcoin-link" onClick={() => { setPage("Buy-Bitcoin"); router(page) }}>Buy bitcoin </a>
-          {/* {state.map( d => <div>{d}</div>)} */}
         </p>
 
       </header>
