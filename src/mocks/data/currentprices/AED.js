@@ -12,12 +12,7 @@ const index = {
       "description": "United States Dollar",
       "rate_float": 45428.9551
     },
-    "AED": {
-      "code": "AED",
-      "rate": "166,510.7660",
-      "description": "United Arab Emirates Dirham",
-      "rate_float": 166510.766
-    }
+
   }
 }
 
